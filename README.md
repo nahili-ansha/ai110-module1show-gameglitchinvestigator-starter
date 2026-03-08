@@ -25,13 +25,28 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+**Game Purpose:**
+A number guessing game where the player tries to guess a secret number within a limited number of attempts. The app gives hints after each guess to guide the player higher or lower depending on the difficulty setting.
+
+**Bugs Found:**
+
+1. **Wrong hint direction** — `check_guess` had the messages swapped: when the guess was too high it said "Go HIGHER!" and when too low it said "Go LOWER!". Test case: secret=97, guess=51 incorrectly told the player to guess lower.
+2. **String vs. integer comparison** — On every even-numbered attempt, the secret was converted to a string before being passed to `check_guess`. This caused lexicographic comparison (e.g. `"51" > "97"` is `False`) instead of numeric comparison
+3. **Attempts counter started at 1** — `session_state.attempts` was initialized to `1` instead of `0` and the attempt counter displayed incorrectly from the start.
+4. **Hard difficulty range was easier than Normal** — Hard returned `1–50` while Normal returned `1–100`, making Hard objectively easier. The info message also hardcoded "between 1 and 100" regardless of difficulty.
+
+**Fixes Applied:**
+
+1. Corrected the hint messages in `check_guess`: `guess > secret` → "Go LOWER!", `guess < secret` → "Go HIGHER!".
+2. Removed the string conversion of the secret — always pass the integer to `check_guess`.
+3. Changed `session_state.attempts` initialization from `1` to `0`.
+4. Changed Hard difficulty range to `1–200` and updated the info message to use `{low}` and `{high}` dynamically.
+5. Moved `check_guess` into `logic_utils.py` and updated `app.py` to import it from there.
+6. Added regression tests in `tests/test_game_logic.py` covering all fixed bugs, and fixed existing tests that were asserting against a string instead of unpacking the returned tuple.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+ ![Fixed winning game](images/Screenshot.jpg) 
 
 ## 🚀 Stretch Features
 
