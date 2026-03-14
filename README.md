@@ -44,9 +44,9 @@ A number guessing game where the player tries to guess a secret number within a 
 5. Moved `check_guess` into `logic_utils.py` and updated `app.py` to import it from there.
 6. Added regression tests in `tests/test_game_logic.py` covering all fixed bugs, and fixed existing tests that were asserting against a string instead of unpacking the returned tuple.
 
-## 📸 Demo
 
- ![Fixed winning game](images/Screenshot.jpg) 
+![Demo](https://github.com/nahili-ansha/ai110-module1show-gameglitchinvestigator-starter/blob/main/images/game-glitch.gif
+)
 
 ## 🚀 Stretch Features
 
